@@ -9,6 +9,6 @@ export const localhost = /*#__PURE__*/ defineChain({
     symbol: "ETH",
   },
   rpcUrls: {
-    default: { http: ["http://127.0.0.1:8545"] },
+    default: { http: ["http://192.168.12.195:8545"] },
   },
 });

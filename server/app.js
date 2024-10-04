@@ -23,10 +23,10 @@ mongoose
   .connect(DB)
   .then(async () => {
     console.log("DB connection successful!");
-    // // Clear the Cluster collection on startup
+    // Clear the Cluster collection on startup
     // await Cluster.deleteMany({});
     // await BlockSync.deleteMany({});
-    // console.log("Cluster collection cleared");
+    console.log("Cluster collection cleared");
     await startEventListeners();
   })
   .catch((error) => {
