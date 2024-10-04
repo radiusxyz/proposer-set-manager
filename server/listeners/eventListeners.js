@@ -1,15 +1,22 @@
-import { createPublicClient, http } from "viem";
+import { createPublicClient, http, webSocket } from "viem";
 import eventService from "../services/eventService.js";
 import blockSyncService from "../services/blockSyncService.js";
 
 import { contractAddress, contractAbi } from "../../common.js";
 import dotenv from "dotenv";
 dotenv.config();
-import { localhost } from "../config.js";
+import { holesky } from "../config.js";
 
 const client = createPublicClient({
-  chain: localhost,
+  chain: holesky,
   transport: http(),
+});
+
+const clientWS = createPublicClient({
+  chain: holesky,
+  transport: webSocket(
+    "wss://holesky.infura.io/ws/v3/45ea6e32af764f3cb6df2c21240b0ff1"
+  ),
 });
 
 // Helper function to check if the log is new
@@ -102,7 +109,7 @@ const watchMultipleContractEvents = async (events) => {
     console.log("currentBlockNumber", currentBlockNumber);
 
     // Start watching contract events after fetching missed events (if any)
-    client.watchContractEvent({
+    clientWS.watchContractEvent({
       address: contractAddress,
       abi: contractAbi,
       fromBlock: lastProcessedEvent
